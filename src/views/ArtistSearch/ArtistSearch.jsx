@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import { RoundButton as Button } from '../../components/RoundButton';
+import { useSetStoreValue } from 'react-context-hook';
+
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    borderColor: '#ffffff',
+  },
+  input: {
+    color: '#ffffff',
+    borderColor: '#ffffff',
+  },
+}));
 
 const ArtistSearch = () => {
-  const [token, setToken] = useState();
+  const classes = useStyles();
+
+  const setToken = useSetStoreValue('token');
+  const [artistsInput, setArtistsInput] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -21,12 +38,28 @@ const ArtistSearch = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then((res) => setToken(res.data));
+      .then((res) => localStorage.setItem('token', JSON.stringify(res.data)));
   }, []);
 
   return (
     <div>
       <h1>Artist Search</h1>
+      <TextField
+        className={classes.textField}
+        InputProps={{
+          className: classes.input,
+        }}
+        color="secondary"
+        value={artistsInput}
+        label="Artists"
+        multiline
+        rows={4}
+        variant="outlined"
+        onChange={(e) => setArtistsInput(e.target.value)}
+      />
+      <Button variant="contained" color="primary">
+        Add Artists
+      </Button>
     </div>
   );
 };

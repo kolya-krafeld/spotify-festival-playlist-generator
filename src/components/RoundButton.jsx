@@ -5,6 +5,6 @@ export const RoundButton = withStyles((theme) => ({
   root: {
     borderRadius: '2rem',
     padding: '1rem 3.5rem',
-    letterSpacing: '3px',
+    letterSpacing: '2px',
   },
 }))(Button);
