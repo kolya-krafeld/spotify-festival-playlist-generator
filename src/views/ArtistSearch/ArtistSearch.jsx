@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ArtistSearch = () => {
+  const [token, setToken] = useState();
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tokenParams = {
@@ -19,8 +21,9 @@ const ArtistSearch = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then((res) => console.log(res.data));
+      .then((res) => setToken(res.data));
   }, []);
+
   return (
     <div>
       <h1>Artist Search</h1>

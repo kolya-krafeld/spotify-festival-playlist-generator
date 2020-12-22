@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 import {
   generateVerifierString,
   sha256Hashing,
   base64urlencode,
 } from '../../lib/authorization';
+
+import { RoundButton as Button } from '../../components/RoundButton';
 
 const Start = () => {
   const authorizeUser = async () => {
@@ -27,6 +28,7 @@ const Start = () => {
 
     window.location.href = endpoint.toString();
   };
+
   return (
     <div>
       <h1>Start</h1>
