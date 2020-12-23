@@ -21,6 +21,13 @@ export const base64urlencode = (a) => {
   return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 };
 
+export const getTokenHeader = () => {
+  const token = sessionStorage.getItem('token');
+  return {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+};
+
 //Helper
 
 const dec2hex = (dec) => {

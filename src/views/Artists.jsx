@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
 import { paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
+import { getTokenHeader } from '../lib/authorization';
 
 const Artists = (props) => {
   const [artists, setArtists] = useState([]);
@@ -21,10 +22,6 @@ const Artists = (props) => {
 
   const searchArtist = (artist) => {
     if (artist !== '') {
-      const token = sessionStorage.getItem('token');
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
       axios
         .get('https://api.spotify.com/v1/search', {
           params: {
@@ -33,18 +30,13 @@ const Artists = (props) => {
             offset: 0,
             limit: 1,
           },
-          ...config,
+          ...getTokenHeader(),
         })
         .then((res) => {
-          const resArtist = res.data.artists.items[0];
-          const artist = {
-            id: resArtist.id,
-            name: resArtist.name,
-            images: resArtist.images,
-          };
-          if (!artists.map((artist) => artist.id).includes(artist.id)) {
+          const resArtist = formatArtist(res.data.artists.items[0]);
+          if (!artists.map((artist) => artist.id).includes(resArtist.id)) {
             setArtists((prev) => {
-              return [artist, ...prev];
+              return [resArtist, ...prev];
             });
           }
         })
@@ -52,6 +44,14 @@ const Artists = (props) => {
           console.log(error);
         });
     }
+  };
+
+  const formatArtist = (artist) => {
+    return {
+      id: artist.id,
+      name: artist.name,
+      images: artist.images,
+    };
   };
 
   const redirectToTracks = () => {

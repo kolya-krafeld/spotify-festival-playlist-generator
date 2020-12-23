@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { RoundButton as Button } from '../components/RoundButton';
+import PlaylistSettings from '../components/PlaylistSettings';
+import { FloatingButton as Button } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +59,7 @@ const ArtistSearch = (props) => {
         variant="outlined"
         onChange={(e) => setArtistsInput(e.target.value)}
       />
+      <PlaylistSettings />
       <Button
         variant="contained"
         color="primary"

@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
 import { paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
+import { getTokenHeader } from '../lib/authorization';
 
 const Tracks = () => {
   const [tracks, setTracks] = useState([]);
@@ -20,16 +21,12 @@ const Tracks = () => {
 
   const getTopTracks = (artistId) => {
     if (artistId !== '') {
-      const token = sessionStorage.getItem('token');
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
       axios
         .get(`	https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
           params: {
             market: 'DE',
           },
-          ...config,
+          ...getTokenHeader(),
         })
         .then((res) => {
           const resTracks = formatTracks(res.data.tracks);
@@ -50,10 +47,6 @@ const Tracks = () => {
 
   const addTrack = (trackName) => {
     if (trackName !== '') {
-      const token = sessionStorage.getItem('token');
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
       axios
         .get('https://api.spotify.com/v1/search', {
           params: {
@@ -62,7 +55,7 @@ const Tracks = () => {
             offset: 0,
             limit: 1,
           },
-          ...config,
+          ...getTokenHeader(),
         })
         .then((res) => {
           const searchedTrack = formatTracks(res.data?.tracks?.items);
@@ -79,6 +72,61 @@ const Tracks = () => {
           console.log(error);
         });
     }
+  };
+
+  const getTrackUris = () => {
+    return tracks.map((track) => track.uri).join();
+  };
+
+  const addTracksToPlaylist = async () => {
+    const playlistId = await createPlaylist();
+    axios
+      .post(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          uris: tracks.map((track) => track.uri),
+        },
+        {
+          ...getTokenHeader(),
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const createPlaylist = async () => {
+    const user = await getSpotifyUser();
+    return axios
+      .post(
+        `	https://api.spotify.com/v1/users/${user.id}/playlists`,
+        {
+          name: 'Test',
+          public: false,
+        },
+        {
+          ...getTokenHeader(),
+        }
+      )
+      .then((res) => {
+        return res.data.id;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const getSpotifyUser = () => {
+    return axios
+      .get('https://api.spotify.com/v1/me', {
+        ...getTokenHeader(),
+      })
+      .then((res) => res.data)
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const formatTracks = (unformatedTracks) => {
@@ -109,7 +157,11 @@ const Tracks = () => {
         }}
       />
       <SelectionList entries={tracks} tracks />
-      <FloatingButton color="primary" variant="extended">
+      <FloatingButton
+        color="primary"
+        variant="extended"
+        onClick={addTracksToPlaylist}
+      >
         Create Playlist
       </FloatingButton>
     </div>
