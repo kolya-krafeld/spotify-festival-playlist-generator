@@ -28,8 +28,11 @@ const Tracks = () => {
           },
           ...getTokenHeader(),
         })
-        .then((res) => {
-          const resTracks = formatTracks(res.data.tracks);
+        .then(async (res) => {
+          const tracksPerArtist = await localStorage.getItem('tracksPerArtist');
+          const resTracks = formatTracks(
+            res.data.tracks.slice(0, tracksPerArtist)
+          );
           console.log(resTracks);
           resTracks.forEach((newTrack) => {
             if (!tracks.map((track) => track.id).includes(newTrack.id)) {
@@ -72,10 +75,6 @@ const Tracks = () => {
           console.log(error);
         });
     }
-  };
-
-  const getTrackUris = () => {
-    return tracks.map((track) => track.uri).join();
   };
 
   const addTracksToPlaylist = async () => {

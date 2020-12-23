@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import PlaylistSettings from '../components/PlaylistSettings';
 import { FloatingButton as Button } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
+import { getAuthToken } from '../lib/authorization';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -20,28 +20,25 @@ const ArtistSearch = (props) => {
   const classes = useStyles();
 
   const [artistsInput, setArtistsInput] = useState('');
+  const [tracksPerArtist, setTracksPerArtist] = useState(3);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tokenParams = {
-      client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
-      grant_type: 'authorization_code',
-      code: params.get('code'),
-      redirect_uri: 'http://localhost:3000/artistSearch',
-      code_verifier: window.localStorage.getItem('verifier'),
-    };
-
-    axios
-      .post('https://accounts.spotify.com/api/token', null, {
-        params: tokenParams,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then((res) => {
-        sessionStorage.setItem('token', res.data?.access_token);
-      });
+    getAuthToken(process.env.REACT_APP_SPOTIFY_CLIENT_ID);
   }, []);
+
+  const handleButtonClick = () => {
+    localStorage.setItem('tracksPerArtist', tracksPerArtist);
+    redirectToArtists();
+  };
+
+  const redirectToArtists = () => {
+    let searchParams = new URLSearchParams();
+    searchParams.append('artists', artistsInput);
+    props.history.push({
+      pathname: '/artists',
+      search: searchParams.toString(),
+    });
+  };
 
   return (
     <div>
@@ -59,12 +56,11 @@ const ArtistSearch = (props) => {
         variant="outlined"
         onChange={(e) => setArtistsInput(e.target.value)}
       />
-      <PlaylistSettings />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => props.history.push('/artists')}
-      >
+      <PlaylistSettings
+        tracksPerArtist={tracksPerArtist}
+        setTracksPerArtist={setTracksPerArtist}
+      />
+      <Button variant="contained" color="primary" onClick={handleButtonClick}>
         Add Artists
       </Button>
     </div>

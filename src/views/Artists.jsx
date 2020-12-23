@@ -16,11 +16,11 @@ const Artists = (props) => {
     const paramArtists = paramsToArray('artists');
     let artist;
     for (artist of paramArtists) {
-      searchArtist(artist);
+      searchArtist(artist, true);
     }
   }, []);
 
-  const searchArtist = (artist) => {
+  const searchArtist = (artist, append) => {
     if (artist !== '') {
       axios
         .get('https://api.spotify.com/v1/search', {
@@ -36,7 +36,7 @@ const Artists = (props) => {
           const resArtist = formatArtist(res.data.artists.items[0]);
           if (!artists.map((artist) => artist.id).includes(resArtist.id)) {
             setArtists((prev) => {
-              return [resArtist, ...prev];
+              return append ? [...prev, resArtist] : [resArtist, ...prev];
             });
           }
         })
@@ -72,7 +72,7 @@ const Artists = (props) => {
         handleInput={(e) => setSearchTerm(e.target.value)}
         handleSubmit={(e) => {
           if (e.key === 'Enter') {
-            searchArtist(searchTerm);
+            searchArtist(searchTerm, false);
             setSearchTerm('');
             e.preventDefault();
           }
@@ -84,7 +84,7 @@ const Artists = (props) => {
         variant="extended"
         onClick={redirectToTracks}
       >
-        Add Tracks
+        Select Artists
       </FloatingButton>
     </div>
   );
