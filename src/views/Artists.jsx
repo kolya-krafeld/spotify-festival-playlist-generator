@@ -54,6 +54,15 @@ const Artists = (props) => {
     }
   };
 
+  const redirectToTracks = () => {
+    let searchParams = new URLSearchParams();
+    searchParams.append('artists', artists.map((artist) => artist.id).join());
+    props.history.push({
+      pathname: '/tracks',
+      search: searchParams.toString(),
+    });
+  };
+
   return (
     <div>
       <h1>Artists</h1>
@@ -73,7 +82,7 @@ const Artists = (props) => {
       <FloatingButton
         color="primary"
         variant="extended"
-        onClick={() => props.history.push('/tracks')}
+        onClick={redirectToTracks}
       >
         Add Tracks
       </FloatingButton>

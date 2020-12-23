@@ -16,7 +16,7 @@ export const FloatingButton = withStyles((theme) => ({
     padding: '1rem 3.5rem',
     letterSpacing: '2px',
     position: 'fixed',
-    bottom: '3rem',
+    bottom: '2.2rem',
     left: '50%',
     transform: 'translateX(-50%)',
   },

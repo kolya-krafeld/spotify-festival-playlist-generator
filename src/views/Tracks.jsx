@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import SearchBar from '../components/SearchBar';
@@ -9,6 +9,14 @@ import { FloatingButton } from '../components/RoundButton';
 const Tracks = () => {
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const paramArtists = paramsToArray('artists');
+    let artist;
+    for (artist of paramArtists) {
+      getTopTracks(artist);
+    }
+  }, []);
 
   const getTopTracks = (artistId) => {
     if (artistId !== '') {
@@ -35,9 +43,12 @@ const Tracks = () => {
             images: track?.album?.images,
           }));
           console.log(resTracks);
-
-          setTracks((prev) => {
-            return [...prev, ...resTracks];
+          resTracks.forEach((newTrack) => {
+            if (!tracks.map((track) => track.id).includes(newTrack.id)) {
+              setTracks((prev) => {
+                return [...prev, newTrack];
+              });
+            }
           });
         })
         .catch((error) => {
