@@ -3,7 +3,7 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { RoundButton as Button } from '../components/RoundButton';
-import { useSetStoreValue } from 'react-context-hook';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ArtistSearch = () => {
+const ArtistSearch = (props) => {
   const classes = useStyles();
 
-  const setToken = useSetStoreValue('token');
   const [artistsInput, setArtistsInput] = useState('');
 
   useEffect(() => {
@@ -38,7 +37,9 @@ const ArtistSearch = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then((res) => localStorage.setItem('token', JSON.stringify(res.data)));
+      .then((res) => {
+        sessionStorage.setItem('token', res.data?.access_token);
+      });
   }, []);
 
   return (
@@ -57,11 +58,15 @@ const ArtistSearch = () => {
         variant="outlined"
         onChange={(e) => setArtistsInput(e.target.value)}
       />
-      <Button variant="contained" color="primary">
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.history.push('/artists')}
+      >
         Add Artists
       </Button>
     </div>
   );
 };
 
-export default ArtistSearch;
+export default withRouter(ArtistSearch);

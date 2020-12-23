@@ -4,6 +4,7 @@ import {
   sha256Hashing,
   base64urlencode,
 } from '../lib/authorization';
+import { useStore } from 'react-context-hook';
 
 import { RoundButton as Button } from '../components/RoundButton';
 

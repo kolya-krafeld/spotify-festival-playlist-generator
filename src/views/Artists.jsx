@@ -1,56 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
-import { useStoreValue } from 'react-context-hook';
 
 import SearchBar from '../components/SearchBar';
+import SelectionList from '../components/SelectionList';
+import { paramsToArray } from '../lib/helper';
 
 const Artists = (props) => {
   const [artists, setArtists] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const windowUrl = window.location.search;
-    const params = new URLSearchParams(windowUrl);
-    const paramArtists = params.get('artists');
-    if (paramArtists) {
-      const artistArray = paramArtists.split(',');
-      console.log(artistArray);
-      let token = JSON.parse(localStorage.getItem('token'));
-      let artist;
-      for (artist of artistArray) {
-        searchArtist(artist, token.access_token);
-      }
+    const paramArtists = paramsToArray('artists');
+    console.log(paramArtists);
+    let artist;
+    for (artist of paramArtists) {
+      searchArtist(artist);
     }
   }, []);
-  const searchArtist = (artist, token) => {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    axios
-      .get('https://api.spotify.com/v1/search', {
-        params: {
-          q: artist,
-          type: 'artist',
-          offset: 0,
-          limit: 1,
-        },
-        ...config,
-      })
-      .then((res) => {
-        const artist = res.data.artists.items[0];
-        if (!artists.map((artist) => artist.id).includes(artist.id)) {
-          setArtists((prev) => {
-            return [...prev, artist];
-          });
-        }
-      });
+
+  const searchArtist = (artist) => {
+    if (artist !== '') {
+      const token = sessionStorage.getItem('token');
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .get('https://api.spotify.com/v1/search', {
+          params: {
+            q: artist,
+            type: 'artist',
+            offset: 0,
+            limit: 1,
+          },
+          ...config,
+        })
+        .then((res) => {
+          const artist = res.data.artists.items[0];
+          if (!artists.map((artist) => artist.id).includes(artist.id)) {
+            setArtists((prev) => {
+              return [...prev, artist];
+            });
+          }
+        });
+    }
   };
 
   return (
@@ -69,21 +61,7 @@ const Artists = (props) => {
           }
         }}
       />
-      <List dense>
-        {artists.map((value) => {
-          return (
-            <ListItem key={value.id} button>
-              <ListItemAvatar>
-                <Avatar src={value.images[2]?.url} />
-              </ListItemAvatar>
-              <ListItemText primary={value.name} />
-              <ListItemSecondaryAction>
-                <Checkbox edge="end" checked />
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
-        })}
-      </List>
+      <SelectionList entries={artists} />
     </div>
   );
 };
