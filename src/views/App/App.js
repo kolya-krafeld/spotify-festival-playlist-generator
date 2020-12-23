@@ -7,6 +7,7 @@ import { withStore } from 'react-context-hook';
 import Start from '../Start';
 import ArtistSearch from '../ArtistSearch';
 import Artists from '../Artists';
+import Tracks from '../Tracks';
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +30,9 @@ const App = () => {
             <Switch>
               <Route path="/artistSearch">
                 <ArtistSearch />
+              </Route>
+              <Route path="/tracks">
+                <Tracks />
               </Route>
               <Route path="/artists">
                 <Artists />

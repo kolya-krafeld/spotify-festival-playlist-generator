@@ -6,11 +6,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  text: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+}));
 
 const SelectionList = (props) => {
-  const { entries } = props;
+  const classes = useStyles();
+  const { entries, tracks } = props;
   return (
-    <List>
+    <List dense>
       {entries
         ? entries.map((entry) => {
             return (
@@ -18,7 +28,11 @@ const SelectionList = (props) => {
                 <ListItemAvatar>
                   <Avatar src={entry.images[2]?.url} />
                 </ListItemAvatar>
-                <ListItemText primary={entry.name} />
+                <ListItemText
+                  classes={{ primary: classes.text }}
+                  primary={entry.name}
+                  secondary={tracks ? 'Artist' : null}
+                />
                 <ListItemSecondaryAction>
                   <Checkbox edge="end" checked />
                 </ListItemSecondaryAction>
