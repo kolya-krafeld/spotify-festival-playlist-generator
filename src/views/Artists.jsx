@@ -44,7 +44,7 @@ const Artists = (props) => {
           };
           if (!artists.map((artist) => artist.id).includes(artist.id)) {
             setArtists((prev) => {
-              return [...prev, artist];
+              return [artist, ...prev];
             });
           }
         })

@@ -32,16 +32,7 @@ const Tracks = () => {
           ...config,
         })
         .then((res) => {
-          const resTracks = res.data.tracks.map((track) => ({
-            artists: track.artists.map((artist) => ({
-              id: artist.id,
-              name: artist.name,
-            })),
-            id: track.id,
-            name: track.name,
-            uri: track.uri,
-            images: track?.album?.images,
-          }));
+          const resTracks = formatTracks(res.data.tracks);
           console.log(resTracks);
           resTracks.forEach((newTrack) => {
             if (!tracks.map((track) => track.id).includes(newTrack.id)) {
@@ -56,6 +47,52 @@ const Tracks = () => {
         });
     }
   };
+
+  const addTrack = (trackName) => {
+    if (trackName !== '') {
+      const token = sessionStorage.getItem('token');
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .get('https://api.spotify.com/v1/search', {
+          params: {
+            q: trackName,
+            type: 'track',
+            offset: 0,
+            limit: 1,
+          },
+          ...config,
+        })
+        .then((res) => {
+          const searchedTrack = formatTracks(res.data?.tracks?.items);
+          if (
+            searchedTrack.length > 0 &&
+            !tracks.map((track) => track.id).includes(searchedTrack[0].id)
+          ) {
+            setTracks((prev) => {
+              return [searchedTrack[0], ...prev];
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const formatTracks = (unformatedTracks) => {
+    return unformatedTracks.map((track) => ({
+      artists: track.artists.map((artist) => ({
+        id: artist.id,
+        name: artist.name,
+      })),
+      id: track.id,
+      name: track.name,
+      uri: track.uri,
+      images: track?.album?.images,
+    }));
+  };
   return (
     <div>
       <h1>Tracks</h1>
@@ -65,7 +102,7 @@ const Tracks = () => {
         handleInput={(e) => setSearchTerm(e.target.value)}
         handleSubmit={(e) => {
           if (e.key === 'Enter') {
-            getTopTracks(searchTerm);
+            addTrack(searchTerm);
             setSearchTerm('');
             e.preventDefault();
           }
