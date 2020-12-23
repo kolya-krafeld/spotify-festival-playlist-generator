@@ -3,9 +3,9 @@ import {
   generateVerifierString,
   sha256Hashing,
   base64urlencode,
-} from '../../lib/authorization';
+} from '../lib/authorization';
 
-import { RoundButton as Button } from '../../components/RoundButton';
+import { RoundButton as Button } from '../components/RoundButton';
 
 const Start = () => {
   const authorizeUser = async () => {

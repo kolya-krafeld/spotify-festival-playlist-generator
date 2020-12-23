@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { RoundButton as Button } from '../../components/RoundButton';
+import { RoundButton as Button } from '../components/RoundButton';
 import { useSetStoreValue } from 'react-context-hook';
 
 const useStyles = makeStyles((theme) => ({

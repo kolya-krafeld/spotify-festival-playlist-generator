@@ -1,11 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import { withStore } from 'react-context-hook';
 
-import Start from '../Start/Start';
-import ArtistSearch from '../ArtistSearch/ArtistSearch';
-import Artists from '../Artists/Artists';
+import Start from '../Start';
+import ArtistSearch from '../ArtistSearch';
+import Artists from '../Artists';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,19 +24,21 @@ const App = () => {
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Route path="/artistSearch">
-              <ArtistSearch />
-            </Route>
-            <Route path="/artists">
-              <Artists />
-            </Route>
-            <Route path="/">
-              <Start />
-            </Route>
-          </Switch>
-        </Router>
+        <Container maxWidth="sm">
+          <Router>
+            <Switch>
+              <Route path="/artistSearch">
+                <ArtistSearch />
+              </Route>
+              <Route path="/artists">
+                <Artists />
+              </Route>
+              <Route path="/">
+                <Start />
+              </Route>
+            </Switch>
+          </Router>
+        </Container>
       </MuiThemeProvider>
     </div>
   );

@@ -9,8 +9,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import { useStoreValue } from 'react-context-hook';
 
+import SearchBar from '../components/SearchBar';
+
 const Artists = (props) => {
   const [artists, setArtists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const windowUrl = window.location.search;
@@ -42,15 +45,30 @@ const Artists = (props) => {
       })
       .then((res) => {
         const artist = res.data.artists.items[0];
-        setArtists((prev) => {
-          return [...prev, artist];
-        });
+        if (!artists.map((artist) => artist.id).includes(artist.id)) {
+          setArtists((prev) => {
+            return [...prev, artist];
+          });
+        }
       });
   };
 
   return (
     <div>
       <h1>Artists</h1>
+      <SearchBar
+        placeholder={'Search for additional Artists'}
+        value={searchTerm}
+        handleInput={(e) => setSearchTerm(e.target.value)}
+        handleSubmit={(e) => {
+          if (e.key === 'Enter') {
+            let token = JSON.parse(localStorage.getItem('token'));
+            searchArtist(searchTerm, token.access_token);
+            setSearchTerm('');
+            e.preventDefault();
+          }
+        }}
+      />
       <List dense>
         {artists.map((value) => {
           return (
