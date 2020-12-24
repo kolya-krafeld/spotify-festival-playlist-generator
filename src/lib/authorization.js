@@ -29,7 +29,7 @@ export const getAuthToken = (clientId) => {
     client_id: clientId,
     grant_type: 'authorization_code',
     code: params.get('code'),
-    redirect_uri: 'http://localhost:3000/artistSearch',
+    redirect_uri: 'http://localhost:3000/auth',
     code_verifier: window.localStorage.getItem('verifier'),
   };
 

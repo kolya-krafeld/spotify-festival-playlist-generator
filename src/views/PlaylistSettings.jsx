@@ -30,7 +30,6 @@ const PlaylistSettings = (props) => {
 
   useEffect(() => {
     console.log(formatOcrResult(ocrResult));
-    getAuthToken(process.env.REACT_APP_SPOTIFY_CLIENT_ID);
   }, []);
 
   const handleButtonClick = () => {

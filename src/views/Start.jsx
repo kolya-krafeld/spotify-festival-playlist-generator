@@ -19,7 +19,7 @@ const Start = () => {
       client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
       scope: 'playlist-modify-public, playlist-modify-private',
       response_type: 'code',
-      redirect_uri: 'http://localhost:3000/artistSearch',
+      redirect_uri: 'http://localhost:3000/auth',
       code_challenge_method: 'S256',
       code_challenge: challenge,
     };
