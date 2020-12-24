@@ -10,6 +10,13 @@ export const RoundButton = withStyles((theme) => ({
   },
 }))(Button);
 
+export const SmallButton = withStyles((theme) => ({
+  root: {
+    borderRadius: '2rem',
+    padding: '0.5rem 1.7rem',
+  },
+}))(Button);
+
 export const FloatingButton = withStyles((theme) => ({
   root: {
     borderRadius: '2rem',

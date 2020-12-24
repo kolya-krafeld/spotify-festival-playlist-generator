@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import ImageUpload from '../components/ImageUpload';
 import PlaylistSettings from '../components/PlaylistSettings';
 import { FloatingButton as Button } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
 import { getAuthToken } from '../lib/authorization';
+import { ocrResult, formatOcrResult } from '../lib/imageRecognition';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -23,6 +28,7 @@ const ArtistSearch = (props) => {
   const [tracksPerArtist, setTracksPerArtist] = useState(3);
 
   useEffect(() => {
+    console.log(formatOcrResult(ocrResult));
     getAuthToken(process.env.REACT_APP_SPOTIFY_CLIENT_ID);
   }, []);
 
@@ -43,6 +49,7 @@ const ArtistSearch = (props) => {
   return (
     <div>
       <h1>Artist Search</h1>
+      <ImageUpload />
       <TextField
         className={classes.textField}
         InputProps={{
@@ -53,7 +60,6 @@ const ArtistSearch = (props) => {
         label="Artists"
         multiline
         rows={4}
-        variant="outlined"
         onChange={(e) => setArtistsInput(e.target.value)}
       />
       <PlaylistSettings
