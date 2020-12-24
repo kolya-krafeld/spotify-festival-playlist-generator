@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import ImageUpload from '../components/ImageUpload';
-import PlaylistSettings from '../components/PlaylistSettings';
+import TracksPerArtist from '../components/TracksPerArtist';
+import NavigationBar from '../components/NavigationBar';
 import { FloatingButton as Button } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
 import { getAuthToken } from '../lib/authorization';
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ArtistSearch = (props) => {
+const PlaylistSettings = (props) => {
   const classes = useStyles();
 
   const [artistsInput, setArtistsInput] = useState('');
@@ -48,7 +49,7 @@ const ArtistSearch = (props) => {
 
   return (
     <div>
-      <h1>Artist Search</h1>
+      <NavigationBar title={'Playlist Settings'} redirectUrl={'/'} />
       <ImageUpload />
       <TextField
         className={classes.textField}
@@ -62,15 +63,20 @@ const ArtistSearch = (props) => {
         rows={4}
         onChange={(e) => setArtistsInput(e.target.value)}
       />
-      <PlaylistSettings
+      <TracksPerArtist
         tracksPerArtist={tracksPerArtist}
         setTracksPerArtist={setTracksPerArtist}
       />
-      <Button variant="contained" color="primary" onClick={handleButtonClick}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleButtonClick}
+        disabled
+      >
         Add Artists
       </Button>
     </div>
   );
 };
 
-export default withRouter(ArtistSearch);
+export default withRouter(PlaylistSettings);

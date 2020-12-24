@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import { withStore } from 'react-context-hook';
 
 import Start from '../Start';
-import ArtistSearch from '../ArtistSearch';
+import PlaylistSettings from '../PlaylistSettings';
 import Artists from '../Artists';
 import Tracks from '../Tracks';
 
@@ -32,7 +32,7 @@ const App = () => {
           <Router>
             <Switch>
               <Route path="/artistSearch">
-                <ArtistSearch />
+                <PlaylistSettings />
               </Route>
               <Route path="/tracks">
                 <Tracks />

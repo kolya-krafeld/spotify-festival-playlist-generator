@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
-const PlaylistSettings = (props) => {
+const TracksPerArtist = (props) => {
   const { tracksPerArtist, setTracksPerArtist } = props;
 
   const handleSliderChange = (event, newSliderValue) => {
@@ -24,4 +24,4 @@ const PlaylistSettings = (props) => {
   );
 };
 
-export default PlaylistSettings;
+export default TracksPerArtist;

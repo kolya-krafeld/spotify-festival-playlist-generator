@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   image: {
-    marginTop: '1rem',
+    marginTop: '1.5rem',
+    marginBottom: '-1.5rem',
     width: '80%',
   },
 }));
@@ -31,7 +32,14 @@ const ImageUpload = () => {
           Upload Line Up Image
         </Button>
       </label>
-      <img src={image} className={classes.image} />
+      {image ? (
+        <div>
+          <img src={image} className={classes.image} />
+          <Button variant="contained" color="primary" component="span">
+            Scan Image
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
