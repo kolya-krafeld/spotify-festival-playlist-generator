@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SmallButton as Button } from '../components/RoundButton';
 import { makeStyles } from '@material-ui/core/styles';
+import { scanImage } from '../lib/imageRecognition';
+
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 
@@ -18,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
 const ImageUpload = () => {
   const classes = useStyles();
   const [image, setImage] = useState();
+  const [imgBase64, setImgBas64] = useState();
+
+  const uploadImg = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgBas64(reader.result);
+    };
+  };
+
   return (
     <div>
       <input
@@ -25,7 +37,10 @@ const ImageUpload = () => {
         accept="image/*"
         id="contained-button-file"
         type="file"
-        onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))}
+        onChange={(e) => {
+          setImage(URL.createObjectURL(e.target.files[0]));
+          uploadImg(e.target.files[0]);
+        }}
       />
       <label htmlFor="contained-button-file">
         <Button variant="contained" color="secondary" component="span">
@@ -35,7 +50,12 @@ const ImageUpload = () => {
       {image ? (
         <div>
           <img src={image} className={classes.image} />
-          <Button variant="contained" color="primary" component="span">
+          <Button
+            onClick={() => scanImage(imgBase64, process.env.REACT_APP_OCR_KEY)}
+            variant="contained"
+            color="primary"
+            component="span"
+          >
             Scan Image
           </Button>
         </div>

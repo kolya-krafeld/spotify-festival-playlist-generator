@@ -1,3 +1,23 @@
+import axios from 'axios';
+
+export const scanImage = async (img, apiKey) => {
+  var formData = new FormData();
+  formData.append('base64Image', img);
+
+  await axios({
+    method: 'post',
+    url: 'https://api.ocr.space/parse/image',
+    data: formData,
+    headers: { 'Content-Type': 'multipart/form-data', apikey: apiKey },
+  })
+    .then((res) => {
+      console.log(res.data?.ParsedResults[0]?.ParsedText);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const formatOcrResult = (ocrRes) => {
   return ocrRes.ParsedResults[0].ParsedText.replaceAll(
     new RegExp('\r\n', 'g'),
