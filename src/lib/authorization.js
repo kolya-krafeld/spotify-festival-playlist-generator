@@ -23,7 +23,7 @@ export const base64urlencode = (a) => {
   return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 };
 
-export const getAuthToken = (clientId) => {
+export const getAuthToken = async (clientId) => {
   const params = new URLSearchParams(window.location.search);
   const tokenParams = {
     client_id: clientId,
@@ -33,7 +33,7 @@ export const getAuthToken = (clientId) => {
     code_verifier: window.localStorage.getItem('verifier'),
   };
 
-  axios
+  await axios
     .post('https://accounts.spotify.com/api/token', null, {
       params: tokenParams,
       headers: {

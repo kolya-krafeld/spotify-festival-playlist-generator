@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
 import NavigationBar from '../components/NavigationBar';
-import { paramsToArray } from '../lib/helper';
+import { checkForToken, paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
 
@@ -14,6 +14,7 @@ const Artists = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    checkForToken(props.history);
     const paramArtists = paramsToArray('artists');
     let artist;
     for (artist of paramArtists) {

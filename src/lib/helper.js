@@ -1,3 +1,9 @@
+export const checkForToken = (history) => {
+  if (!sessionStorage.getItem('token')) {
+    history.push('/');
+  }
+};
+
 export const paramsToArray = (paramKey) => {
   const windowUrl = window.location.search;
   const params = new URLSearchParams(windowUrl);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import { checkForToken } from '../lib/helper';
 import ImageUpload from '../components/ImageUpload';
 import TracksPerArtist from '../components/TracksPerArtist';
 import NavigationBar from '../components/NavigationBar';
@@ -25,6 +26,7 @@ const PlaylistSettings = (props) => {
   const [tracksPerArtist, setTracksPerArtist] = useState(3);
 
   useEffect(() => {
+    checkForToken(props.history);
     console.log(formatOcrResult(ocrResult));
   }, []);
 

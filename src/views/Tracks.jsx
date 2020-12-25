@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
 import NavigationBar from '../components/NavigationBar';
-import { paramsToArray } from '../lib/helper';
+import { checkForToken, paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
 
-const Tracks = () => {
+const Tracks = (props) => {
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    checkForToken(props.history);
     const paramArtists = paramsToArray('artists');
     let artist;
     for (artist of paramArtists) {
@@ -168,4 +170,4 @@ const Tracks = () => {
   );
 };
 
-export default Tracks;
+export default withRouter(Tracks);
