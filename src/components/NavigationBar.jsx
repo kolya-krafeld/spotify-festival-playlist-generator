@@ -23,8 +23,11 @@ const NavigationBar = (props) => {
   const { title, redirectUrl } = props;
 
   const redirectBack = () => {
-    console.log('test');
-    props.history.push(redirectUrl);
+    if (redirectUrl) {
+      props.history.push(redirectUrl);
+    } else {
+      props.history.goBack();
+    }
   };
   return (
     <AppBar

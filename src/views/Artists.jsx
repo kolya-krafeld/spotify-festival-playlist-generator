@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
+import NavigationBar from '../components/NavigationBar';
 import { paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
@@ -65,7 +66,7 @@ const Artists = (props) => {
 
   return (
     <div>
-      <h1>Artists</h1>
+      <NavigationBar title={'Artists'} />
       <SearchBar
         placeholder={'Add more Artists'}
         value={searchTerm}

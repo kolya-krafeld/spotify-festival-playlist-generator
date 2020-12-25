@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
+import NavigationBar from '../components/NavigationBar';
 import { paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
@@ -142,7 +143,7 @@ const Tracks = () => {
   };
   return (
     <div>
-      <h1>Tracks</h1>
+      <NavigationBar title={'Tracks'} />
       <SearchBar
         placeholder={'Add more Tracks'}
         value={searchTerm}
