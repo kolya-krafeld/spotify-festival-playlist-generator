@@ -14,20 +14,30 @@ const Tracks = (props) => {
   const playlistName = useStoreValue('playlistName');
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     checkForToken(props.history);
+    setLoading(true);
     const paramArtists = paramsToArray('artists');
-    let artist;
-    for (artist of paramArtists) {
-      getTopTracks(artist);
+
+    const trackCalls = [];
+    for (let artist of paramArtists) {
+      trackCalls.push(getTopTracks(artist));
     }
+    Promise.all(trackCalls)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
   }, []);
 
   const getTopTracks = (artistId) => {
     if (artistId !== '') {
-      axios
-        .get(`	https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+      return axios
+        .get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
           params: {
             market: 'DE',
           },
@@ -178,6 +188,7 @@ const Tracks = (props) => {
         entries={tracks}
         tracks
         toggleSelection={toggleTrackSelection}
+        loading={loading}
       />
       <FloatingButton
         color="primary"

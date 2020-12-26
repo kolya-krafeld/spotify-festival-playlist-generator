@@ -8,6 +8,8 @@ import TracksPerArtist from '../components/TracksPerArtist';
 import NavigationBar from '../components/NavigationBar';
 import { FloatingButton } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   nameInput: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
       color: 'red',
     },
   },
+  textLink: { marginTop: '1.5rem' },
   textField: {
     padding: '1rem 1.5rem 1rem 1.5rem',
     borderRadius: '0.9rem',
@@ -81,6 +84,10 @@ const PlaylistSettings = (props) => {
         setTracksPerArtist={setTracksPerArtist}
       />
       <ImageUpload setOcrText={setArtistsInput} />
+
+      <Typography variant="button" display="block" className={classes.textLink}>
+        <Link color="secondary">No Image? Insert Artists From Text</Link>
+      </Typography>
       <div>
         {artistsInput !== '' ? (
           <InputBase

@@ -6,6 +6,7 @@ import {
 } from '../lib/authorization';
 
 import { RoundButton as Button } from '../components/RoundButton';
+import { Typography } from '@material-ui/core';
 
 const Start = () => {
   const authorizeUser = async () => {
@@ -32,7 +33,8 @@ const Start = () => {
 
   return (
     <div>
-      <h1>Start</h1>
+      <h1>Festival Playlist Generator</h1>
+
       <Button onClick={authorizeUser} variant="contained" color="primary">
         Create Playlist
       </Button>

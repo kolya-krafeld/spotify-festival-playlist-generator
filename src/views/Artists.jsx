@@ -12,19 +12,30 @@ import { getTokenHeader } from '../lib/authorization';
 const Artists = (props) => {
   const [artists, setArtists] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     checkForToken(props.history);
+    setLoading(true);
     const paramArtists = paramsToArray('artists');
-    let artist;
-    for (artist of paramArtists) {
-      searchArtist(artist, true);
+
+    const artistCalls = [];
+    for (let artist of paramArtists) {
+      artistCalls.push(searchArtist(artist, true));
     }
+    Promise.all(artistCalls)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const searchArtist = (artist, append) => {
     if (artist !== '') {
-      axios
+      return axios
         .get('https://api.spotify.com/v1/search', {
           params: {
             q: artist,
@@ -101,6 +112,7 @@ const Artists = (props) => {
       <SelectionList
         entries={artists}
         toggleSelection={toggleArtistSelection}
+        loading={loading}
       />
       <FloatingButton
         color="primary"
