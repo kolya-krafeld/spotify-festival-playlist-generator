@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectionList = (props) => {
   const classes = useStyles();
-  const { entries, tracks } = props;
+  const { entries, tracks, toggleSelection } = props;
 
   const getArtistsList = (artists) => {
     return artists.map((artist) => artist.name).join(', ');
@@ -39,7 +39,11 @@ const SelectionList = (props) => {
       {entries
         ? entries.map((entry) => {
             return (
-              <ListItem key={entry.id} button>
+              <ListItem
+                key={entry.id}
+                button
+                onClick={() => toggleSelection(entry)}
+              >
                 <ListItemAvatar>
                   <Avatar
                     src={entry.images[2]?.url}
@@ -54,8 +58,8 @@ const SelectionList = (props) => {
                   primary={entry.name}
                   secondary={tracks ? getArtistsList(entry.artists) : null}
                 />
-                <ListItemSecondaryAction>
-                  <Checkbox edge="end" checked />
+                <ListItemSecondaryAction onClick={() => toggleSelection(entry)}>
+                  <Checkbox edge="end" checked={entry.selected} />
                 </ListItemSecondaryAction>
               </ListItem>
             );

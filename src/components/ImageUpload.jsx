@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useStore } from 'react-context-hook';
 import { SmallButton as Button } from '../components/RoundButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { scanImage } from '../lib/imageRecognition';
-
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles((theme) => ({
   imgInput: {
     display: 'none',
   },
   image: {
-    marginTop: '1.5rem',
-    marginBottom: '-1.5rem',
-    width: '80%',
+    marginTop: '2rem',
+    marginBottom: '-1.4rem',
+    width: '85%',
   },
 }));
 
-const ImageUpload = () => {
+const ImageUpload = (props) => {
+  const { setOcrText } = props;
   const classes = useStyles();
-  const [image, setImage] = useState();
-  const [imgBase64, setImgBas64] = useState();
+  const [image, setImage] = useStore('image', '');
+  const [imgBase64, setImgBas64] = useStore('imgBase64', '');
 
   const uploadImg = (file) => {
     let reader = new FileReader();
@@ -28,6 +27,12 @@ const ImageUpload = () => {
     reader.onloadend = () => {
       setImgBas64(reader.result);
     };
+  };
+
+  const scanImg = async () => {
+    const oceText = await scanImage(imgBase64, process.env.REACT_APP_OCR_KEY);
+    console.log(oceText);
+    setOcrText(oceText);
   };
 
   return (
@@ -51,7 +56,7 @@ const ImageUpload = () => {
         <div>
           <img src={image} className={classes.image} />
           <Button
-            onClick={() => scanImage(imgBase64, process.env.REACT_APP_OCR_KEY)}
+            onClick={scanImg}
             variant="contained"
             color="primary"
             component="span"

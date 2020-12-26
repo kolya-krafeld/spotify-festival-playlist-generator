@@ -53,7 +53,19 @@ const Artists = (props) => {
       id: artist.id,
       name: artist.name,
       images: artist.images,
+      selected: true,
     };
+  };
+
+  const toggleArtistSelection = (entry) => {
+    let selectedArtist = entry;
+    selectedArtist.selected = !selectedArtist.selected;
+    const index = artists.findIndex(
+      (artist) => artist.id === selectedArtist.id
+    );
+    let updatedArtists = [...artists];
+    updatedArtists[index] = selectedArtist;
+    setArtists(updatedArtists);
   };
 
   const redirectToTracks = () => {
@@ -80,7 +92,10 @@ const Artists = (props) => {
           }
         }}
       />
-      <SelectionList entries={artists} />
+      <SelectionList
+        entries={artists}
+        toggleSelection={toggleArtistSelection}
+      />
       <FloatingButton
         color="primary"
         variant="extended"

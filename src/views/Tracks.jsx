@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { useStoreValue } from 'react-context-hook';
 
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
@@ -10,6 +11,7 @@ import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
 
 const Tracks = (props) => {
+  const playlistName = useStoreValue('playlistName');
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -81,10 +83,11 @@ const Tracks = (props) => {
   };
 
   const addTracksToPlaylist = async () => {
-    const playlistId = await createPlaylist();
+    const playlist = await createPlaylist();
+    console.log(playlist);
     axios
       .post(
-        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`,
         {
           uris: tracks.map((track) => track.uri),
         },
@@ -106,7 +109,7 @@ const Tracks = (props) => {
       .post(
         `	https://api.spotify.com/v1/users/${user.id}/playlists`,
         {
-          name: 'Test',
+          name: playlistName,
           public: false,
         },
         {
@@ -114,12 +117,13 @@ const Tracks = (props) => {
         }
       )
       .then((res) => {
-        return res.data.id;
+        return res.data;
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const getSpotifyUser = () => {
     return axios
       .get('https://api.spotify.com/v1/me', {
@@ -141,7 +145,17 @@ const Tracks = (props) => {
       name: track.name,
       uri: track.uri,
       images: track?.album?.images,
+      selected: true,
     }));
+  };
+
+  const toggleTrackSelection = (entry) => {
+    let selectedTrack = entry;
+    selectedTrack.selected = !selectedTrack.selected;
+    const index = tracks.findIndex((track) => track.id === selectedTrack.id);
+    let updatedTracks = [...tracks];
+    updatedTracks[index] = selectedTrack;
+    setTracks(updatedTracks);
   };
   return (
     <div>
@@ -158,7 +172,11 @@ const Tracks = (props) => {
           }
         }}
       />
-      <SelectionList entries={tracks} tracks />
+      <SelectionList
+        entries={tracks}
+        tracks
+        toggleSelection={toggleTrackSelection}
+      />
       <FloatingButton
         color="primary"
         variant="extended"

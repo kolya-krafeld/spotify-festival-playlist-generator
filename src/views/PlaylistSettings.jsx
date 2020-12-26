@@ -1,34 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+import { useStore } from 'react-context-hook';
+import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 import { checkForToken } from '../lib/helper';
 import ImageUpload from '../components/ImageUpload';
 import TracksPerArtist from '../components/TracksPerArtist';
 import NavigationBar from '../components/NavigationBar';
-import { FloatingButton as Button } from '../components/RoundButton';
+import { FloatingButton } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
-import { ocrResult, formatOcrResult } from '../lib/imageRecognition';
 
 const useStyles = makeStyles((theme) => ({
+  nameInput: {
+    width: '85%',
+    borderRadius: '1.5rem',
+    padding: '0.42rem 1.5rem 0.4rem 1.5rem',
+    color: '#ffffff',
+    backgroundColor: '#222222',
+    fontSize: '10.5pt',
+    marginBottom: '2rem',
+    fontWeight: 500,
+    '&::placeholder': {
+      color: 'red',
+    },
+  },
   textField: {
-    borderColor: '#ffffff',
+    padding: '1rem 1.5rem 1rem 1.5rem',
+    borderRadius: '0.9rem',
+    color: '#ffffff',
+    backgroundColor: '#222222',
+    fontSize: '9pt',
+    marginTop: '2rem',
+    width: '85%',
   },
   input: {
     color: '#ffffff',
     borderColor: '#ffffff',
+  },
+  footerSpacer: {
+    height: '7rem',
   },
 }));
 
 const PlaylistSettings = (props) => {
   const classes = useStyles();
 
-  const [artistsInput, setArtistsInput] = useState('');
+  const [name, setName] = useStore('playlistName', '');
   const [tracksPerArtist, setTracksPerArtist] = useState(3);
+  const [artistsInput, setArtistsInput] = useStore('artistsInput', '');
 
   useEffect(() => {
     checkForToken(props.history);
-    console.log(formatOcrResult(ocrResult));
-  }, []);
+  }, [props.history]);
 
   const handleButtonClick = () => {
     localStorage.setItem('tracksPerArtist', tracksPerArtist);
@@ -47,26 +69,37 @@ const PlaylistSettings = (props) => {
   return (
     <div>
       <NavigationBar title={'Playlist Settings'} redirectUrl={'/'} />
-      <ImageUpload />
-      <TextField
-        className={classes.textField}
-        InputProps={{
-          className: classes.input,
-        }}
-        color="secondary"
-        value={artistsInput}
-        label="Artists"
-        multiline
-        rows={4}
-        onChange={(e) => setArtistsInput(e.target.value)}
+      <InputBase
+        type="text"
+        placeholder="Playlist Name"
+        className={classes.nameInput}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <TracksPerArtist
         tracksPerArtist={tracksPerArtist}
         setTracksPerArtist={setTracksPerArtist}
       />
-      <Button variant="contained" color="primary" onClick={handleButtonClick}>
+      <ImageUpload setOcrText={setArtistsInput} />
+      <div>
+        {artistsInput !== '' ? (
+          <InputBase
+            className={classes.textField}
+            value={artistsInput}
+            placeholder="Artists"
+            multiline
+            onChange={(e) => setArtistsInput(e.target.value)}
+          />
+        ) : null}
+      </div>
+      <div className={classes.footerSpacer}></div>
+      <FloatingButton
+        color="primary"
+        variant="extended"
+        onClick={handleButtonClick}
+      >
         Add Artists
-      </Button>
+      </FloatingButton>
     </div>
   );
 };
