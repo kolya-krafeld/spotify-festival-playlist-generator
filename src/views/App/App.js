@@ -9,6 +9,7 @@ import Authorization from '../Authorization';
 import PlaylistSettings from '../PlaylistSettings';
 import Artists from '../Artists';
 import Tracks from '../Tracks';
+import PlaylistCreated from '../PlaylistCreated';
 
 const theme = createMuiTheme({
   palette: {
@@ -21,6 +22,10 @@ const theme = createMuiTheme({
     },
     info: {
       main: '#b3b3b3',
+    },
+    action: {
+      disabledBackground: 'rgba(30,215,96,0.3)',
+      disabled: 'rgba(255,255,255,0.3)',
     },
   },
 });
@@ -43,6 +48,9 @@ const App = () => {
               </Route>
               <Route path="/artists">
                 <Artists />
+              </Route>
+              <Route path="/playlist">
+                <PlaylistCreated />
               </Route>
               <Route path="/">
                 <Start />

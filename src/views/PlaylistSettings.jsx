@@ -10,6 +10,7 @@ import { FloatingButton } from '../components/RoundButton';
 import { withRouter } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles((theme) => ({
   nameInput: {
@@ -79,6 +80,8 @@ const PlaylistSettings = (props) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
+      <Typography>Public Playlist</Typography>
+      <Switch color="primary" />
       <TracksPerArtist
         tracksPerArtist={tracksPerArtist}
         setTracksPerArtist={setTracksPerArtist}

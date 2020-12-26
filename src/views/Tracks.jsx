@@ -9,8 +9,21 @@ import NavigationBar from '../components/NavigationBar';
 import { checkForToken, paramsToArray } from '../lib/helper';
 import { FloatingButton } from '../components/RoundButton';
 import { getTokenHeader } from '../lib/authorization';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
 
 const Tracks = (props) => {
+  const classes = useStyles();
   const playlistName = useStoreValue('playlistName');
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -194,8 +207,14 @@ const Tracks = (props) => {
         color="primary"
         variant="extended"
         onClick={addTracksToPlaylist}
+        disabled
       >
         Create Playlist
+        <CircularProgress
+          color="secondary"
+          size={24}
+          className={classes.buttonProgress}
+        ></CircularProgress>
       </FloatingButton>
     </div>
   );

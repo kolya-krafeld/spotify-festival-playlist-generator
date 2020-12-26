@@ -119,7 +119,7 @@ const Artists = (props) => {
         variant="extended"
         onClick={redirectToTracks}
       >
-        Select Artists
+        Add Artists
       </FloatingButton>
     </div>
   );
