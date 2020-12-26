@@ -70,7 +70,13 @@ const Artists = (props) => {
 
   const redirectToTracks = () => {
     let searchParams = new URLSearchParams();
-    searchParams.append('artists', artists.map((artist) => artist.id).join());
+    searchParams.append(
+      'artists',
+      artists
+        .filter((artist) => artist.selected)
+        .map((artist) => artist.id)
+        .join()
+    );
     props.history.push({
       pathname: '/tracks',
       search: searchParams.toString(),

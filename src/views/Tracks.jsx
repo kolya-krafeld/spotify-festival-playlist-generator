@@ -89,7 +89,9 @@ const Tracks = (props) => {
       .post(
         `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`,
         {
-          uris: tracks.map((track) => track.uri),
+          uris: tracks
+            .filter((track) => track.selected)
+            .map((track) => track.uri),
         },
         {
           ...getTokenHeader(),
