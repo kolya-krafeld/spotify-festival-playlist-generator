@@ -12,9 +12,16 @@ const PlaylistCreated = () => {
       <Button variant="contained" color="primary">
         Go to playlist
       </Button>
-      <SmallButton variant="contained" color="secondary" component="span">
-        Create new playlist
-      </SmallButton>
+      <div>
+        <SmallButton
+          onClick={redirectToStart}
+          variant="contained"
+          color="secondary"
+          component="span"
+        >
+          Go to Start Page
+        </SmallButton>
+      </div>
     </div>
   );
 };
