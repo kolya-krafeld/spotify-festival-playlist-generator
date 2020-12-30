@@ -30,6 +30,7 @@ const Tracks = (props) => {
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
+  const [creatingPlaylist, setCreatingPlaylist] = useState(false);
 
   useEffect(() => {
     checkForToken(props.history);
@@ -107,6 +108,7 @@ const Tracks = (props) => {
   };
 
   const addTracksToPlaylist = async () => {
+    setCreatingPlaylist(true);
     const playlist = await createPlaylist();
     console.log(playlist);
     axios
@@ -208,14 +210,16 @@ const Tracks = (props) => {
         color="primary"
         variant="extended"
         onClick={addTracksToPlaylist}
-        disabled
+        disabled={creatingPlaylist}
       >
         Create Playlist
-        <CircularProgress
-          color="secondary"
-          size={24}
-          className={classes.buttonProgress}
-        ></CircularProgress>
+        {creatingPlaylist ? (
+          <CircularProgress
+            color="secondary"
+            size={24}
+            className={classes.buttonProgress}
+          ></CircularProgress>
+        ) : null}
       </FloatingButton>
     </div>
   );
