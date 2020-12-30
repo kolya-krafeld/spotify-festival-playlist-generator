@@ -13,7 +13,7 @@ export const RoundButton = withStyles((theme) => ({
 export const SmallButton = withStyles((theme) => ({
   root: {
     borderRadius: '2rem',
-    padding: '0.42rem 1.5rem 0.4rem 1.5rem',
+    padding: '0.43rem 1.5rem 0.4rem 1.5rem',
   },
 }))(Button);
 

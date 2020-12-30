@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Tracks = (props) => {
   const classes = useStyles();
   const playlistName = useStoreValue('playlistName');
+  const tracksPerArtist = useStoreValue('tracksPerArtist');
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -57,9 +58,8 @@ const Tracks = (props) => {
           ...getTokenHeader(),
         })
         .then(async (res) => {
-          const tracksPerArtist = await localStorage.getItem('tracksPerArtist');
           const resTracks = formatTracks(
-            res.data.tracks.slice(0, tracksPerArtist)
+            res.data.tracks.slice(0, tracksPerArtist ? tracksPerArtist : 3)
           );
           console.log(resTracks);
           resTracks.forEach((newTrack) => {
