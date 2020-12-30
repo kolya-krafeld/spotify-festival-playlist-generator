@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { useStoreValue } from 'react-context-hook';
+import { useStoreValue, useSetStoreValue } from 'react-context-hook';
 
 import SearchBar from '../components/SearchBar';
 import SelectionList from '../components/SelectionList';
@@ -31,6 +31,7 @@ const Tracks = (props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [creatingPlaylist, setCreatingPlaylist] = useState(false);
+  const setPlaylistUrl = useSetStoreValue('playlistUrl');
 
   useEffect(() => {
     checkForToken(props.history);
@@ -110,6 +111,8 @@ const Tracks = (props) => {
   const addTracksToPlaylist = async () => {
     setCreatingPlaylist(true);
     const playlist = await createPlaylist();
+    setPlaylistUrl(playlist?.external_urls?.spotify);
+
     console.log(playlist);
     axios
       .post(
@@ -125,6 +128,7 @@ const Tracks = (props) => {
       )
       .then((res) => {
         console.log(res);
+        props.history.push('/playlist');
       })
       .catch((error) => {
         console.log(error);
