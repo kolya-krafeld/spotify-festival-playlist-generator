@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ImageUpload = (props) => {
-  const { setOcrText } = props;
+  const { setOcrText, setShowTextField } = props;
   const classes = useStyles();
   const [image, setImage] = useStore('image', '');
   const [imgBase64, setImgBas64] = useStore('imgBase64', '');
@@ -31,7 +31,7 @@ const ImageUpload = (props) => {
 
   const scanImg = async () => {
     const oceText = await scanImage(imgBase64, process.env.REACT_APP_OCR_KEY);
-    console.log(oceText);
+    setShowTextField(true);
     setOcrText(oceText);
   };
 
@@ -54,7 +54,7 @@ const ImageUpload = (props) => {
       </label>
       {image ? (
         <div>
-          <img src={image} className={classes.image} />
+          <img src={image} className={classes.image} alt="" />
           <Button
             onClick={scanImg}
             variant="contained"

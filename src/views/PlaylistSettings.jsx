@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useStore } from 'react-context-hook';
+import { useStore, useStoreValue } from 'react-context-hook';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 import { checkForToken } from '../lib/helper';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
   },
   textLink: {
-    marginTop: '1.5rem',
+    marginTop: '1.75rem',
   },
   textField: {
     padding: '1rem 1.5rem 1rem 1.5rem',
@@ -34,9 +34,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2rem',
     width: '85%',
   },
-  input: {
-    color: '#ffffff',
-    borderColor: '#ffffff',
+  textFieldInfoText: {
+    marginTop: 2,
+    fontSize: '10pt',
+    color: '#777474',
   },
   footerSpacer: {
     height: '7rem',
@@ -48,6 +49,8 @@ const PlaylistSettings = (props) => {
 
   const [name, setName] = useStore('playlistName', '');
   const [artistsInput, setArtistsInput] = useStore('artistsInput', '');
+  const [showTextField, setShowTextField] = useState(false);
+  const image = useStoreValue('image');
 
   useEffect(() => {
     checkForToken(props.history);
@@ -77,20 +80,36 @@ const PlaylistSettings = (props) => {
         onChange={(e) => setName(e.target.value)}
       />
       <BasicSettings />
-      <ImageUpload setOcrText={setArtistsInput} />
+      <ImageUpload
+        setOcrText={setArtistsInput}
+        setShowTextField={setShowTextField}
+      />
 
-      <Typography variant="button" display="block" className={classes.textLink}>
-        <Link color="secondary">No Image? Insert Artists From Text</Link>
-      </Typography>
+      {!image && !showTextField ? (
+        <Typography
+          variant="button"
+          display="block"
+          className={classes.textLink}
+        >
+          <Link color="secondary" onClick={() => setShowTextField(true)}>
+            No Image? Insert Artists From Text
+          </Link>
+        </Typography>
+      ) : null}
       <div>
-        {artistsInput !== '' ? (
-          <InputBase
-            className={classes.textField}
-            value={artistsInput}
-            placeholder="Artists"
-            multiline
-            onChange={(e) => setArtistsInput(e.target.value)}
-          />
+        {artistsInput !== '' || showTextField ? (
+          <div>
+            <InputBase
+              className={classes.textField}
+              value={artistsInput}
+              placeholder="Artists"
+              multiline
+              onChange={(e) => setArtistsInput(e.target.value)}
+            />
+            <Typography className={classes.textFieldInfoText}>
+              Artists should be Comma separated!
+            </Typography>
+          </div>
         ) : null}
       </div>
       <div className={classes.footerSpacer}></div>

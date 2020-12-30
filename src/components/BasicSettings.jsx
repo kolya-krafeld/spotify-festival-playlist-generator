@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     width: '85%',
     marginLeft: '7.5%',
+    marginBottom: '1.5rem',
   },
   switchLabel: {
     float: 'left',
