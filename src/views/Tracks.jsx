@@ -26,6 +26,7 @@ const Tracks = (props) => {
   const classes = useStyles();
   const playlistName = useStoreValue('playlistName');
   const tracksPerArtist = useStoreValue('tracksPerArtist');
+  const publicPlaylist = useStoreValue('publicPlaylist');
   const [tracks, setTracks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -135,7 +136,7 @@ const Tracks = (props) => {
         `	https://api.spotify.com/v1/users/${user.id}/playlists`,
         {
           name: playlistName,
-          public: false,
+          public: publicPlaylist ? publicPlaylist : false,
         },
         {
           ...getTokenHeader(),
