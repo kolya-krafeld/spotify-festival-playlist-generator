@@ -44,8 +44,8 @@ const SelectionList = (props) => {
         //Loading Skeleton
         <List dense className={classes.list}>
           {[0, 1, 2, 3, 4, 5].map((item) => (
-            <ListItem>
-              <ListItemAvatar key={item}>
+            <ListItem key={item}>
+              <ListItemAvatar>
                 <Skeleton
                   className={classes.skeleton}
                   variant={tracks ? 'rect' : 'circle'}
