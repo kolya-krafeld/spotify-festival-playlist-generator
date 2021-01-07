@@ -108,19 +108,36 @@ const Tracks = (props) => {
     }
   };
 
-  const addTracksToPlaylist = async () => {
+  const createPlaylistAndAddTracks = async () => {
     setCreatingPlaylist(true);
     const playlist = await createPlaylist();
     setPlaylistUrl(playlist?.external_urls?.spotify);
-
     console.log(playlist);
-    axios
+
+    const filteredTracks = tracks.filter((track) => track.selected);
+    const splicedTrackCalls = [];
+    while (filteredTracks.length > 0) {
+      splicedTrackCalls.push(
+        addTracksToPlaylist(filteredTracks.splice(0, 100), playlist)
+      );
+    }
+
+    Promise.all(splicedTrackCalls)
+      .then(() => {
+        props.history.push('/playlist');
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const addTracksToPlaylist = async (splicedTracks, playlist) => {
+    console.log(splicedTracks);
+    return axios
       .post(
         `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`,
         {
-          uris: tracks
-            .filter((track) => track.selected)
-            .map((track) => track.uri),
+          uris: splicedTracks.map((track) => track.uri),
         },
         {
           ...getTokenHeader(),
@@ -128,7 +145,6 @@ const Tracks = (props) => {
       )
       .then((res) => {
         console.log(res);
-        props.history.push('/playlist');
       })
       .catch((error) => {
         console.log(error);
@@ -213,7 +229,7 @@ const Tracks = (props) => {
       <FloatingButton
         color="primary"
         variant="extended"
-        onClick={addTracksToPlaylist}
+        onClick={createPlaylistAndAddTracks}
         disabled={creatingPlaylist}
       >
         Create Playlist
