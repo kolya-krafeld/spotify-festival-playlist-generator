@@ -26,16 +26,24 @@ const PlaylistCreated = (props) => {
   const playlistName = useStoreValue('playlistName');
   const playlistUrl = useStoreValue('playlistUrl');
 
+  const redirectToPlaylist = () => {
+    window.open(playlistUrl, '_blank');
+  };
+
   const redirectToStart = () => {
-    props.history.push('/start');
+    props.history.push('/');
   };
 
   return (
     <div>
       <h1 className={classes.title}>Playlist '{playlistName}' created</h1>
       <div className={classes.buttonContainer}>
-        <Button variant="contained" color="primary">
-          <a href={playlistUrl}>Go to playlist</a>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={redirectToPlaylist}
+        >
+          Go to playlist
         </Button>
         <div>
           <SmallButton

@@ -107,7 +107,7 @@ const PlaylistSettings = (props) => {
               onChange={(e) => setArtistsInput(e.target.value)}
             />
             <Typography className={classes.textFieldInfoText}>
-              Artists should be Comma separated!
+              Artists should be comma separated!
             </Typography>
           </div>
         ) : null}
