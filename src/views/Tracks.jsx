@@ -222,7 +222,7 @@ const Tracks = (props) => {
             color="secondary"
             size={24}
             className={classes.buttonProgress}
-          ></CircularProgress>
+          />
         ) : null}
       </FloatingButton>
     </div>

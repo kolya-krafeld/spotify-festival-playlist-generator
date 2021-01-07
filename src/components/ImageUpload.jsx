@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStore } from 'react-context-hook';
 import { SmallButton as Button } from '../components/RoundButton';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { scanImage } from '../lib/imageRecognition';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,13 +14,22 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '-1.4rem',
     width: '85%',
   },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 const ImageUpload = (props) => {
   const { setOcrText, setShowTextField } = props;
   const classes = useStyles();
+
   const [image, setImage] = useStore('image', '');
   const [imgBase64, setImgBas64] = useStore('imgBase64', '');
+  const [scanningImg, setScanningImg] = useState(false);
 
   const uploadImg = (file) => {
     let reader = new FileReader();
@@ -30,7 +40,9 @@ const ImageUpload = (props) => {
   };
 
   const scanImg = async () => {
+    setScanningImg(true);
     const oceText = await scanImage(imgBase64, process.env.REACT_APP_OCR_KEY);
+    setScanningImg(false);
     setShowTextField(true);
     setOcrText(oceText);
   };
@@ -60,8 +72,16 @@ const ImageUpload = (props) => {
             variant="contained"
             color="primary"
             component="span"
+            disabled={scanningImg}
           >
             Scan Image
+            {scanningImg ? (
+              <CircularProgress
+                color="secondary"
+                size={24}
+                className={classes.buttonProgress}
+              />
+            ) : null}
           </Button>
         </div>
       ) : null}
