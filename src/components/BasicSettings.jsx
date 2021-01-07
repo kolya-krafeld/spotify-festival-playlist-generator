@@ -53,7 +53,7 @@ const BasicSettings = () => {
           className={classes.sliderContainer}
           value={tracksPerArtist}
           onChange={handleSliderChange}
-          min={0}
+          min={1}
           max={10}
           valueLabelDisplay="auto"
         />
