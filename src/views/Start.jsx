@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
   },
   description: {
-    margin: 'auto',
     textAlign: 'center',
     margin: '22rem 1rem 0rem 1rem',
   },
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Start = (props) => {
-  const { theme } = props;
   const classes = useStyles();
 
   const authorizeUser = async () => {
