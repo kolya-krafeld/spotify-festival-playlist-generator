@@ -50,11 +50,16 @@ const PlaylistSettings = (props) => {
   const [name, setName] = useStore('playlistName', '');
   const [artistsInput, setArtistsInput] = useStore('artistsInput', '');
   const [showTextField, setShowTextField] = useState(false);
+  const [disabledFloatingButton, setDisabledFloatingButton] = useState(true);
   const image = useStoreValue('image');
 
   useEffect(() => {
     checkForToken(props.history);
   }, [props.history]);
+
+  useEffect(() => {
+    setDisabledFloatingButton(name === '' || artistsInput === '');
+  }, [name, artistsInput]);
 
   const handleButtonClick = () => {
     redirectToArtists();
@@ -117,6 +122,7 @@ const PlaylistSettings = (props) => {
         color="primary"
         variant="extended"
         onClick={handleButtonClick}
+        disabled={disabledFloatingButton}
       >
         Add Artists
       </FloatingButton>
