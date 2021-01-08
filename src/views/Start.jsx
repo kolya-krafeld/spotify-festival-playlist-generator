@@ -49,11 +49,10 @@ const Start = (props) => {
       client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
       scope: 'playlist-modify-public, playlist-modify-private',
       response_type: 'code',
-      redirect_uri: !(
+      redirect_uri:
         !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-      )
-        ? 'https://sp-festival-playlist-generator.web.app/auth'
-        : 'http://localhost:3000/auth',
+          ? 'http://localhost:3000/auth'
+          : 'https://sp-festival-playlist-generator.web.app/auth',
       code_challenge_method: 'S256',
       code_challenge: challenge,
     };
