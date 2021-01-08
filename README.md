@@ -5,7 +5,7 @@
     <img src="public/playlist-icon.png" alt="Icon" width="60" height="60">
   </a>
 
-  <h3 align="center">Spotify Playlist Generator</h3>
+  <h3 align="center">Festival Playlist Generator</h3>
 
   <p align="center">
      Create Spotify playlists from festival line‑up pictures using optical character recognition (OCR)
