@@ -26,11 +26,7 @@
   <p align="center">
     Create Spotify playlists from festival line‑up pictures using optical character recognition (OCR)
     <br />
-    <br />
-    <br />
-    <a href="https://sp-festival-playlist-generator.web.app/">
-     <img src="img/exploreAppButton.png" alt="Explore App" width="270" height="63">
-    </a>
+    <a href="https://sp-festival-playlist-generator.web.app/"><strong>Explore Web App</strong></a>
     <br />
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
