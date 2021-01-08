@@ -29,7 +29,11 @@ export const getAuthToken = async (clientId) => {
     client_id: clientId,
     grant_type: 'authorization_code',
     code: params.get('code'),
-    redirect_uri: 'http://localhost:3000/auth',
+    redirect_uri: !(
+      !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+    )
+      ? 'https://sp-festival-playlist-generator.web.app/auth'
+      : 'http://localhost:3000/auth',
     code_verifier: window.localStorage.getItem('verifier'),
   };
 
