@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useStore, useStoreValue } from 'react-context-hook';
-import InputBase from '@material-ui/core/InputBase';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { checkForToken } from '../lib/helper';
 import ImageUpload from '../components/ImageUpload';
 import BasicSettings from '../components/BasicSettings';
 import NavigationBar from '../components/NavigationBar';
 import { FloatingButton } from '../components/RoundButton';
-import { withRouter } from 'react-router-dom';
+import InputBase from '@material-ui/core/InputBase';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 

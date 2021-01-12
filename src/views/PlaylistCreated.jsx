@@ -1,10 +1,9 @@
 import React from 'react';
-import { RoundButton as Button, SmallButton } from '../components/RoundButton';
 import { useStoreValue } from 'react-context-hook';
 import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+import { RoundButton as Button, SmallButton } from '../components/RoundButton';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   title: { marginTop: '30%' },

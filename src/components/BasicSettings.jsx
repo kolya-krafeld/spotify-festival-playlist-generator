@@ -1,9 +1,10 @@
 import React from 'react';
+import { useStore } from 'react-context-hook';
+
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import { useStore } from 'react-context-hook';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

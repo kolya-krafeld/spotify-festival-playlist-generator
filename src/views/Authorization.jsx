@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+
+import { getAuthToken } from '../lib/authorization';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getAuthToken } from '../lib/authorization';
-import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   progress: {

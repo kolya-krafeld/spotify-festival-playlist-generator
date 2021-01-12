@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { withStore } from 'react-context-hook';
 
 import Start from '../Start';
@@ -10,6 +8,8 @@ import PlaylistSettings from '../PlaylistSettings';
 import Artists from '../Artists';
 import Tracks from '../Tracks';
 import PlaylistCreated from '../PlaylistCreated';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
 const theme = createMuiTheme({
   palette: {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useStore } from 'react-context-hook';
+
 import { SmallButton as Button } from '../components/RoundButton';
+import { scanImage } from '../lib/imageRecognition';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { scanImage } from '../lib/imageRecognition';
 
 const useStyles = makeStyles((theme) => ({
   imgInput: {

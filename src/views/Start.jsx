@@ -1,10 +1,10 @@
 import React from 'react';
+
 import {
   generateVerifierString,
   sha256Hashing,
   base64urlencode,
 } from '../lib/authorization';
-
 import { RoundButton as Button } from '../components/RoundButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
