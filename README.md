@@ -8,9 +8,9 @@
   <h3 align="center">Festival Playlist Generator</h3>
 
   <p align="center">
-    <br />
     <a href="https://sp-festival-playlist-generator.web.app/"><strong>Explore Web App</strong></a>
   </p>
+  <br/>
 </p>
 
 ## What is the Festival Playlist Generator?
