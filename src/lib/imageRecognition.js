@@ -1,25 +1,25 @@
 import axios from 'axios';
 
-export const scanImage = async (img, apiKey) => {
-  const ocrResult = await callOcrApi(img, apiKey); //mockOcrResult.ParsedResults[0]?.ParsedText;
+export const scanImage = async (img) => {
+  const ocrResult = mockOcrResult; //await callOcrApi(img);
   const formatedArtists = formatOcrResult(ocrResult);
   return formatedArtists;
 };
 
 //Helpers
 
-const callOcrApi = (img, apiKey) => {
+const callOcrApi = (img) => {
   var formData = new FormData();
-  formData.append('base64Image', img);
+  formData.append('image', img);
 
   return axios({
     method: 'post',
-    url: 'https://api.ocr.space/parse/image',
+    url: 'http://localhost:5000/api/ocr',
     data: formData,
-    headers: { 'Content-Type': 'multipart/form-data', apikey: apiKey },
+    headers: { 'Content-Type': 'multipart/form-data' },
   })
     .then((res) => {
-      return res.data?.ParsedResults[0]?.ParsedText;
+      return res.data;
     })
     .catch((error) => {
       console.log(error);
@@ -27,22 +27,34 @@ const callOcrApi = (img, apiKey) => {
 };
 
 const formatOcrResult = (ocrRes) => {
-  return ocrRes.replaceAll(new RegExp('\r\n', 'g'), ',\n').replaceAll('•', ',');
+  return ocrRes
+    .replace(/(?:\r\n|\r|\n)/g, ',\n')
+    .replaceAll('•', ',')
+    .replaceAll('·', ',')
+    .replaceAll('«', ',');
 };
 
-const mockOcrResult = {
-  ParsedResults: [
-    {
-      FileParseExitCode: 1,
-      TextOrientation: '0',
-      ParsedText:
-        'HURRICANE\r\n18.-20. JUNI\r\nFESTIVAL 2021\r\nEICHENRING,\r\nSCHEESSEL\r\nBISHER\r\nBESTÄTIGT!\r\nSEEED\r\nMARTIN GARRIX THE KILLERS\r\nSDP • DERMOT KENNEDY • GIANT ROOKS • LP • WHILE SHE SLEEPS • MILLENCOLIN\r\nFONTAINES D.C. FIL BO RIVA • THE DEAD SOUTH • NECK DEEP\r\nMAYDAY PARADE • KELVYN COLT, MIYA FOLICK\r\n4,\r\nDEICHKIND\r\nso\r\nTHE 1975 • VON WEGEN LISBETH • MANDO DIAO • KUMMER • JIMMY EAT WORLD • FOALS • JUJU\r\nTONES AND I • ANTILOPEN GANG • BAD RELIGION • NOTHING BUT THIEVES • TURBOSTAAT\r\nWOLF ALICE • HALF MOON RUN • AURORA • KOLLEKTIV TURMSTRASSE LIVE\r\nGEORGIA • JC STEWART • SCHROTTGRENZE • FLASH FORWARD • HELGEN\r\nKINGS OF LEON RISE AGAINST\r\nBRING ME THE HORIZON • THE HIVES • THES UHLMANN & BAND SUM 41\r\nSWISS & DIE ANDERN • FERDINAND IS LEFT BOY • BHZ • MODESELEKTOR LIVE\r\nCATFISH AND THE BOTTLEMEN FRITTENBUDE • BLUES PILLS • SKINDRED\r\nMINE • LARI LUKE • HOT MILK BLOND\r\n... UND VIELE, VIELE MEHR! INFOS: WWW.HURRICANE.DE\r\n',
-      ErrorMessage: '',
-      ErrorDetails: '',
-    },
-  ],
-  OCRExitCode: 1,
-  IsErroredOnProcessing: false,
-  ProcessingTimeInMilliseconds: 19.962,
-  SearchablePDFURL: 'Searchable PDF not generated as it was not requested.',
-};
+const mockOcrResult = `HURRICANE
+EICHENRING,
+SCHEESSEL
+18.-20. JUNI
+FESTIVAL 2021
+BISHER
+BESTÄTIGT!
+SEEED • MARTIN GARRIX • THE KILLERS
+FR
+SDP · DERMOT KENNEDY GIANT ROOKS LP WHILE SHE SLEEPS MILLENCOLIN
+FONTAINES D.C. · FIL BO RIVA · THE DEAD SOUTH NECK DEEP
+MAYDAY PARADE KELVYN COLT MIYA FOLICK
+DEICHKIND «
+SA
+THE 1975 VON WEGEN LISBETH · MANDO DIAO · KUMMER · JIMMY EAT WORLD FOALS JUJU
+TONES AND I · ANTILOPEN GANG · BAD RELIGION NOTHING BUT THIEVES TURBOSTAAT
+WOLF ALICE · HALF MOON RUN · AURORA · KOLLEKTIV TURMSTRASSE LIVE
+GEORGIA · JC STEWART · SCHROTTGRENZE · FLASH FORWARD · HELGEN
+o KINGS OF LEON • RISE AGAINST
+BRING ME THE HORIZON · THE HIVES · THEES UHLMANN & BAND · SUM 41
+ISS & DIE ANDERN · FERDINAND IS LEFT BOY · BHZ · MODESELEKTOR LIVE
+CATFISH AND THE BOTTLEMEN • FRITTENBUDE · BLUES PILLS · SKINDRED
+MINE · LARI LUKE · HOT MILK · BLOND
+.. UND VIELE, VIELE MEHR! INFOS: WWW.HURRICANE.DE`;

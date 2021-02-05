@@ -33,16 +33,12 @@ const ImageUpload = (props) => {
   const [scanningImg, setScanningImg] = useState(false);
 
   const uploadImg = (file) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgBas64(reader.result);
-    };
+    setImgBas64(file);
   };
 
   const scanImg = async () => {
     setScanningImg(true);
-    const oceText = await scanImage(imgBase64, process.env.REACT_APP_OCR_KEY);
+    const oceText = await scanImage(imgBase64);
     setScanningImg(false);
     setShowTextField(true);
     setOcrText(oceText);
