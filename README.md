@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/kolya-kra/spotify-festival-playlist-generator">
-    <img src="public/playlist-icon.png" alt="Icon" width="60" height="60">
+    <img src="https://github.com/kolya-kra/spotify-festival-playlist-generator/blob/master/img/smartmockups_kksmspxg.png" alt="Phone Mockup" width="360" >
   </a>
 
   <h3 align="center">Festival Playlist Generator</h3>
