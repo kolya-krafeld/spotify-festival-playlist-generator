@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    textAlign: 'center',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
 }));
 
