@@ -5,6 +5,7 @@ import { SmallButton as Button } from '../components/RoundButton';
 import { scanImage } from '../lib/imageRecognition';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   imgInput: {
@@ -22,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  ocrResultInfo: {
+    marginTop: '1.5rem',
+    fontSize: '10pt',
+  },
 }));
 
 const ImageUpload = (props) => {
@@ -31,6 +36,7 @@ const ImageUpload = (props) => {
   const [image, setImage] = useStore('image', '');
   const [imgBase64, setImgBas64] = useStore('imgBase64', '');
   const [scanningImg, setScanningImg] = useState(false);
+  const [imgProcessed, setImgProcessed] = useState(false);
 
   const uploadImg = (file) => {
     setImgBas64(file);
@@ -42,6 +48,7 @@ const ImageUpload = (props) => {
     setScanningImg(false);
     setShowTextField(true);
     setOcrText(oceText);
+    setImgProcessed(true);
   };
 
   return (
@@ -82,6 +89,14 @@ const ImageUpload = (props) => {
           </Button>
         </div>
       ) : null}
+      {imgProcessed ? (
+        <Typography className={classes.ocrResultInfo}>
+          Please make sure artists are comma seperated <br /> and remove text
+          that is not required!
+        </Typography>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

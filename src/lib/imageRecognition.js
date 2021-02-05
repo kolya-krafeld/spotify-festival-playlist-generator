@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const scanImage = async (img) => {
-  const ocrResult = mockOcrResult; //await callOcrApi(img);
+  const ocrResult = await callOcrApi(img);
   const formatedArtists = formatOcrResult(ocrResult);
   return formatedArtists;
 };
