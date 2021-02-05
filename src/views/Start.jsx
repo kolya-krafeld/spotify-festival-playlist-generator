@@ -11,23 +11,20 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
-    position: 'absolute',
-    top: '10%',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    marginTop: '10%',
   },
   title: {
     marginTop: -20,
     marginBottom: -20,
     fontSize: '48pt',
-    textAlign: 'left',
+    textAlign: 'center',
   },
   description: {
     textAlign: 'center',
-    margin: '22rem 1rem 0rem 1rem',
+    margin: '12rem 1rem 0rem 1rem',
   },
   descriptionText: {
-    textAlign: 'left',
+    textAlign: 'center',
     display: 'inline-block',
   },
   button: {
