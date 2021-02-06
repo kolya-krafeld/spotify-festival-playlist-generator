@@ -14,7 +14,7 @@ const callOcrApi = (img) => {
 
   return axios({
     method: 'post',
-    url: 'http://localhost:5000/api/ocr',
+    url: 'https://playlist-generator.deskcode.de/api/ocr',
     data: formData,
     headers: { 'Content-Type': 'multipart/form-data' },
   })
