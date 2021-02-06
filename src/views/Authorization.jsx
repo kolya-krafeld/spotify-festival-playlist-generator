@@ -18,7 +18,7 @@ const Authorization = (props) => {
 
   useEffect(async () => {
     await getAuthToken(process.env.REACT_APP_SPOTIFY_CLIENT_ID);
-    props.history.push('/settings');
+    props.history.replace('/settings');
   }, []);
   return (
     <div>
