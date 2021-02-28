@@ -8,14 +8,10 @@ import {
 import { RoundButton as Button } from '../components/RoundButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
-    marginTop: '20%',
+    marginTop: '40%',
   },
   logo: {
     width: '15%',
@@ -25,17 +21,18 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: 'center',
     fontSize: '14pt',
+    fontWeight: 'bold',
   },
   description: {
     textAlign: 'center',
-    margin: '12rem 1rem 0rem 1rem',
-  },
-  descriptionText: {
-    textAlign: 'center',
-    display: 'inline-block',
+    margin: '0 auto',
+    display: 'flex',
+    marginTop: '1.25rem',
+    color: '#bfbfbf',
+    width: '21rem',
   },
   button: {
-    marginTop: '5rem',
+    marginTop: '6rem',
   },
 }));
 
@@ -82,29 +79,12 @@ const Start = (props) => {
         </div>
       </div>
 
-      <Stepper className={classes.stepper} orientation="vertical">
-        <Step>
-          <StepLabel>Upload Line-Up Imgage</StepLabel>
-          <StepContent></StepContent>
-        </Step>
-        <Step>
-          <StepLabel>Select Artists</StepLabel>
-          <StepContent></StepContent>
-        </Step>
-        <Step>
-          <StepLabel>Select Top Tracks</StepLabel>
-          <StepContent></StepContent>
-        </Step>
-      </Stepper>
-
-      {/* <div className={classes.description}>
-        <Typography variant="subtitle1" className={classes.descriptionText}>
-          Create a Spotify Playlist for your next music festival!
-        </Typography>
+      <div className={classes.description}>
         <Typography variant="body2" className={classes.descriptionText}>
-          Simply upload a line-up image or type in the upcoming acts.
+          Create a Spotify Playlist for your next music festival! Simply upload
+          a line-up image or type in the upcoming acts.
         </Typography>
-      </div> */}
+      </div>
 
       <Button
         onClick={authorizeUser}
