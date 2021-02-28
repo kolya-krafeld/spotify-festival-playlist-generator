@@ -33,5 +33,5 @@ The Festival Playlist Generator was created using the Spotify API. Therefore all
 
 * [React](https://reactjs.org/)
 * [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
-* [OCR Space API](https://ocr.space/)
+* [Google Cloud Vision](https://cloud.google.com/vision/)
 * [Material UI](https://material-ui.com/)
