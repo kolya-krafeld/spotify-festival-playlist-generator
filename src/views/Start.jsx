@@ -34,6 +34,23 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: '6rem',
   },
+  attribution: {
+    fontSize: '8pt',
+    position: 'absolute',
+    textAlign: 'center',
+    bottom: 0,
+    left: '50%',
+    transform: 'translateX(-50%)',
+  },
+  contentBy: {
+    float: 'left',
+    paddingTop: -3,
+  },
+  spotifyLogo: {
+    width: '50px',
+    marginTop: '10px',
+    marginLeft: '5px',
+  },
 }));
 
 const Start = (props) => {
@@ -94,6 +111,14 @@ const Start = (props) => {
       >
         Create Playlist
       </Button>
+      <div className={classes.attribution}>
+        <p className={classes.contentBy}>Content provided by</p>
+        <img
+          className={classes.spotifyLogo}
+          src={process.env.PUBLIC_URL + '/spotify.png'}
+          alt="spotify"
+        />
+      </div>
     </div>
   );
 };
