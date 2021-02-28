@@ -8,16 +8,23 @@ import {
 import { RoundButton as Button } from '../components/RoundButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
-    marginTop: '10%',
+    marginTop: '20%',
+  },
+  logo: {
+    width: '15%',
+    minWidth: '75px',
+    marginBottom: '25px',
   },
   title: {
-    marginTop: -20,
-    marginBottom: -20,
-    fontSize: '48pt',
     textAlign: 'center',
+    fontSize: '14pt',
   },
   description: {
     textAlign: 'center',
@@ -63,19 +70,41 @@ const Start = (props) => {
   return (
     <div>
       <div className={classes.titleContainer}>
-        <h1 className={classes.title}>Festival</h1>
-        <h1 className={classes.title}>Playlist</h1>
-        <h1 className={classes.title}>Generator</h1>
+        <img
+          className={classes.logo}
+          src={process.env.PUBLIC_URL + '/logo.png'}
+          alt="Festival Playlist Generator"
+        />
+        <div>
+          <Typography variant="button" gutterBottom className={classes.title}>
+            Festival Playlist Generator
+          </Typography>
+        </div>
       </div>
 
-      <div className={classes.description}>
+      <Stepper className={classes.stepper} orientation="vertical">
+        <Step>
+          <StepLabel>Upload Line-Up Imgage</StepLabel>
+          <StepContent></StepContent>
+        </Step>
+        <Step>
+          <StepLabel>Select Artists</StepLabel>
+          <StepContent></StepContent>
+        </Step>
+        <Step>
+          <StepLabel>Select Top Tracks</StepLabel>
+          <StepContent></StepContent>
+        </Step>
+      </Stepper>
+
+      {/* <div className={classes.description}>
         <Typography variant="subtitle1" className={classes.descriptionText}>
           Create a Spotify Playlist for your next music festival!
         </Typography>
         <Typography variant="body2" className={classes.descriptionText}>
           Simply upload a line-up image or type in the upcoming acts.
         </Typography>
-      </div>
+      </div> */}
 
       <Button
         onClick={authorizeUser}
